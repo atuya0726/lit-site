@@ -11,6 +11,7 @@ type MatchEntry = {
 type MatchResult = {
 	id: string;
 	date: string;
+	endDate?: string;
 	tournament: string;
 	entries: MatchEntry[];
 };
@@ -21,12 +22,27 @@ const sorted = (matchResults as MatchResult[]).sort(
 
 const [feature, ...rest] = sorted;
 
+const pad2 = (n: number) => String(n).padStart(2, '0');
 const formatYear = (d: string) => new Date(d).getFullYear();
-const formatMonthDay = (d: string) => {
-	const date = new Date(d);
-	const month = String(date.getMonth() + 1).padStart(2, '0');
-	const day = String(date.getDate()).padStart(2, '0');
-	return `${month}.${day}`;
+const formatMonth = (d: string) => pad2(new Date(d).getMonth() + 1);
+const formatDay = (d: string) => pad2(new Date(d).getDate());
+const formatMonthDay = (d: string) => `${formatMonth(d)}.${formatDay(d)}`;
+
+const formatDateRange = (start: string, end?: string) => {
+	if (!end || end === start) return formatMonthDay(start);
+	const s = new Date(start);
+	const e = new Date(end);
+	if (s.getFullYear() !== e.getFullYear() || s.getMonth() !== e.getMonth()) {
+		return `${formatMonthDay(start)}–${formatMonthDay(end)}`;
+	}
+	return `${formatMonthDay(start)}–${formatDay(end)}`;
+};
+
+const formatYearRange = (start: string, end?: string) => {
+	const sy = formatYear(start);
+	if (!end) return `${sy}`;
+	const ey = formatYear(end);
+	return sy === ey ? `${sy}` : `${sy}–${ey}`;
 };
 
 const uniqueCategories = (entries: MatchEntry[]) =>
@@ -40,7 +56,7 @@ const uniqueCategories = (entries: MatchEntry[]) =>
 			試合結果<span class="serif"> .</span>
 		</h1>
 		<p class="lead">
-			大会ごとの戦績を蓄積しています。
+			大会ごとの戦績を記録しています。
 		</p>
 	</section>
 
@@ -49,9 +65,9 @@ const uniqueCategories = (entries: MatchEntry[]) =>
 			<section class="feature">
 				<div class="feature-left">
 					<p class="feature-eyebrow">Latest</p>
-					<p class="feature-date">
-						<span class="big">{formatMonthDay(feature.date)}</span>
-						<span class="year">/ {formatYear(feature.date)}</span>
+					<p class={`feature-date${feature.endDate ? ' is-range' : ''}`}>
+						<span class="big">{formatDateRange(feature.date, feature.endDate)}</span>
+						<span class="year">/ {formatYearRange(feature.date, feature.endDate)}</span>
 					</p>
 				</div>
 				<div class="feature-right">
@@ -85,9 +101,9 @@ const uniqueCategories = (entries: MatchEntry[]) =>
 			{
 				rest.map((item) => (
 					<li>
-						<div class="row-date">
-							<span class="row-md">{formatMonthDay(item.date)}</span>
-							<span class="row-y">{formatYear(item.date)}</span>
+						<div class={`row-date${item.endDate ? ' is-range' : ''}`}>
+							<span class="row-md">{formatDateRange(item.date, item.endDate)}</span>
+							<span class="row-y">{formatYearRange(item.date, item.endDate)}</span>
 						</div>
 						<div class="row-body">
 							<div class="row-title">
@@ -199,6 +215,10 @@ const uniqueCategories = (entries: MatchEntry[]) =>
 		font-size: clamp(2.6rem, 5vw + 0.5rem, 4.6rem);
 		font-weight: 800;
 		letter-spacing: -0.04em;
+	}
+
+	.feature-date.is-range .big {
+		font-size: clamp(1.9rem, 3.4vw + 0.4rem, 3.2rem);
 	}
 
 	.year {
@@ -326,7 +346,7 @@ const uniqueCategories = (entries: MatchEntry[]) =>
 
 	.list > li {
 		display: grid;
-		grid-template-columns: 110px 1fr;
+		grid-template-columns: minmax(110px, max-content) 1fr;
 		gap: 1.4rem;
 		padding: 1.3rem 1.5rem;
 		border-radius: 18px;
@@ -357,6 +377,11 @@ const uniqueCategories = (entries: MatchEntry[]) =>
 		letter-spacing: -0.02em;
 		color: var(--primary);
 		line-height: 1;
+		white-space: nowrap;
+	}
+
+	.row-date.is-range .row-md {
+		font-size: 1.3rem;
 	}
 
 	.row-y {

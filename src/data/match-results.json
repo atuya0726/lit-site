@@ -1,52 +1,76 @@
 [
 	{
-		"id": "2026-spring-tochigi-open",
-		"date": "2026-04-20",
-		"tournament": "栃木県春季クラブ対抗",
+		"id": "2025-autumn-tochigi",
+		"date": "2025-11-16",
+		"tournament": "栃木県クラブ対抗秋季大会",
 		"entries": [
 			{
 				"label": "Aチーム",
-				"category": "団体戦",
-				"result": "ベスト8"
+				"category": "団体",
+				"result": "1部3位"
 			},
 			{
 				"label": "Bチーム",
-				"category": "団体戦",
-				"result": "2回戦敗退"
+				"category": "団体",
+				"result": "2部6位"
+			},
+			{
+				"label": "Cチーム",
+				"category": "団体",
+				"result": "3部5位"
 			}
 		]
 	},
 	{
-		"id": "2026-ujiie-cup",
-		"date": "2026-03-16",
-		"tournament": "氏家カップ",
+		"id": "2025-all-japan-club",
+		"date": "2025-10-25",
+		"endDate": "2025-10-26",
+		"tournament": "全日本ソフトテニスクラブ選手権",
 		"entries": [
 			{
-				"label": "鈴木・田中ペア",
-				"category": "一般男子",
-				"result": "3位"
-			},
-			{
-				"label": "佐藤・高橋ペア",
-				"category": "一般男子",
+				"label": "Aチーム",
+				"category": "団体",
 				"result": "ベスト16"
 			},
 			{
-				"label": "山本・伊藤ペア",
-				"category": "一般男子",
+				"label": "Bチーム",
+				"category": "団体",
 				"result": "1回戦敗退"
 			}
 		]
 	},
 	{
-		"id": "2026-feb-practice-match",
-		"date": "2026-02-11",
-		"tournament": "県内合同練習試合",
+		"id": "2025-spring-tochigi",
+		"date": "2025-07-06",
+		"tournament": "栃木県クラブ対抗春季大会",
 		"entries": [
 			{
-				"label": "チーム全体",
-				"category": "練習試合",
-				"result": "6勝4敗"
+				"label": "Aチーム",
+				"category": "団体",
+				"result": "2部優勝"
+			},
+			{
+				"label": "Bチーム",
+				"category": "団体",
+				"result": "3部準優勝"
+			},
+			{
+				"label": "Cチーム",
+				"category": "団体",
+				"result": "4部準優勝"
+			}
+		]
+	},
+	{
+		"id": "2024-all-japan-club",
+		"date": "2024-10-26",
+		"endDate": "2024-10-27",
+		"tournament": "全日本クラブソフトテニス選手権大会",
+		"entries": [
+			{
+				"label": "Aチーム",
+				"category": "団体",
+				"result": "3位"
 			}
 		]
 	}
