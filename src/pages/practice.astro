@@ -1,0 +1,287 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const schedule = [
+	{ day: 'WD', jp: '平日', time: '19:00 – 21:00', place: '栃木県総合運動公園' },
+	{ day: 'Sat', jp: '土曜', time: '09:00 – 12:00', place: '日光運動公園' }
+];
+
+const items = ['ラケット', 'テニスシューズ', '飲み物', 'タオル', '替えのシャツ'];
+---
+
+<Layout title="Practice" description="Lit. の練習日程や参加方法についてのページです。">
+	<section class="page-hero">
+		<p class="eyebrow">— 01 / Practice</p>
+		<h1>
+			練習について<span class="serif"> .</span>
+		</h1>
+		<p class="lead">
+			ガチ勢のメンバーからエンジョイ勢のメンバーまで、無理のないペースで取り組める活動を行っています。
+		</p>
+	</section>
+
+	<section class="bento">
+		<article class="card span-2">
+			<p class="card-tag">Schedule</p>
+			<h2>平均的な活動スケジュール</h2>
+			<ul class="schedule">
+				{
+					schedule.map((s) => (
+						<li>
+							<div class="schedule-day">
+								<span class="day-en">{s.day}</span>
+								<span class="day-jp">{s.jp}</span>
+							</div>
+							<div class="schedule-meta">
+								<p class="time">{s.time}</p>
+								<p class="place">{s.place}</p>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</article>
+
+		<article class="card dark">
+			<p class="card-tag light">Location</p>
+			<h2>活動エリア</h2>
+			<p>
+				栃木県日光市と近郊の屋外/屋内コートを中心に活動しています。<br />
+				（例）日光運動公園、栃木県総合運動公園、鬼怒グリーンパーク
+			</p>
+
+			<p class="kicker">Tochigi · Utsunomiya, Nikko area</p>
+		</article>
+
+		<article class="card">
+			<p class="card-tag">Who</p>
+			<h2>こんな方に</h2>
+			<ul class="bullets">
+				<li>学生時代に経験のある方</li>
+				<li>ブランクからの再開を検討中の方</li>
+			</ul>
+		</article>
+
+		<article class="card span-2 light-card">
+			<p class="card-tag">Bring</p>
+			<h2>参加時の持ち物</h2>
+			<div class="chips">
+				{items.map((i) => <span class="chip">{i}</span>)}
+			</div>
+			<p class="note">
+				体験参加の場合は、事前に <a href="/contact">問い合わせフォーム</a> からご連絡ください。
+			</p>
+		</article>
+	</section>
+</Layout>
+
+<style>
+	.page-hero {
+		max-width: 1200px;
+		margin: clamp(2rem, 5vw, 4rem) auto 0;
+		padding: 0 clamp(1rem, 4vw, 2.5rem);
+	}
+
+	.eyebrow {
+		margin: 0;
+		font-family: var(--font-en);
+		font-size: 0.78rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--ink-soft);
+	}
+
+	.page-hero h1 {
+		margin: 0.6rem 0 0.8rem;
+		font-family: var(--font-display);
+		font-size: clamp(2.4rem, 5vw + 0.5rem, 4.2rem);
+		line-height: 1;
+		letter-spacing: -0.03em;
+		color: var(--primary);
+	}
+
+	.serif {
+		color: var(--ink);
+	}
+
+	.lead {
+		margin: 0;
+		max-width: 36rem;
+		line-height: 1.9;
+		color: var(--ink-soft);
+	}
+
+	.bento {
+		max-width: 1200px;
+		margin: 2.5rem auto 0;
+		padding: 0 clamp(1rem, 4vw, 2.5rem);
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.1rem;
+	}
+
+	.card {
+		position: relative;
+		padding: clamp(1.4rem, 2vw, 2rem);
+		border-radius: 24px;
+		background: var(--glass-strong);
+		border: 1px solid rgba(255, 255, 255, 0.7);
+		backdrop-filter: blur(18px);
+		-webkit-backdrop-filter: blur(18px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.card.span-2 {
+		grid-column: span 2;
+	}
+
+	.card.dark {
+		background: linear-gradient(160deg, var(--primary), var(--primary-deep));
+		color: var(--secondary);
+	}
+
+	.card.light-card {
+		background: rgba(248, 249, 250, 0.85);
+	}
+
+	.card-tag {
+		margin: 0;
+		font-family: var(--font-en);
+		font-size: 0.7rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--ink-soft);
+	}
+
+	.card-tag.light {
+		color: rgba(248, 249, 250, 0.7);
+	}
+
+	.card h2 {
+		margin: 0.5rem 0 1rem;
+		font-family: var(--font-display);
+		font-size: clamp(1.45rem, 1.5vw + 1rem, 1.85rem);
+		font-weight: 700;
+		letter-spacing: -0.01em;
+	}
+
+	.card p {
+		margin: 0;
+		line-height: 1.85;
+		color: var(--ink-soft);
+	}
+
+	.card.dark p {
+		color: rgba(248, 249, 250, 0.85);
+	}
+
+	.kicker {
+		margin-top: 1rem !important;
+		font-family: var(--font-en);
+		font-size: 0.78rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: rgba(248, 249, 250, 0.6) !important;
+	}
+
+	.schedule {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.7rem;
+	}
+
+	.schedule li {
+		display: grid;
+		grid-template-columns: 88px 1fr;
+		gap: 1rem;
+		align-items: center;
+		padding: 1rem;
+		border: 1px solid rgba(98, 48, 121, 0.16);
+		border-radius: 16px;
+		background: rgba(255, 255, 255, 0.6);
+	}
+
+	.schedule-day {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 0.45rem 0.5rem;
+		background: var(--primary);
+		color: var(--secondary);
+		border-radius: 12px;
+		line-height: 1;
+	}
+
+	.day-en {
+		font-family: var(--font-display);
+		font-size: 1.3rem;
+		font-weight: 800;
+	}
+
+	.day-jp {
+		font-size: 0.65rem;
+		margin-top: 4px;
+		letter-spacing: 0.1em;
+		opacity: 0.8;
+	}
+
+	.time {
+		margin: 0;
+		font-family: var(--font-en);
+		font-weight: 600;
+		font-size: 1rem;
+		color: var(--ink) !important;
+	}
+
+	.place {
+		margin: 0.25rem 0 0;
+		font-size: 0.88rem;
+	}
+
+	.bullets {
+		margin: 0;
+		padding-left: 1.1rem;
+		line-height: 1.95;
+		color: var(--ink-soft);
+	}
+
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.chip {
+		padding: 0.45rem 0.85rem;
+		border-radius: 999px;
+		background: rgba(98, 48, 121, 0.08);
+		border: 1px solid rgba(98, 48, 121, 0.18);
+		color: var(--primary);
+		font-size: 0.85rem;
+		font-weight: 500;
+	}
+
+	.note {
+		margin-top: 1rem !important;
+		font-size: 0.85rem;
+	}
+
+	.note a {
+		color: var(--primary);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	@media (max-width: 880px) {
+		.bento {
+			grid-template-columns: 1fr;
+		}
+		.card.span-2 {
+			grid-column: auto;
+		}
+	}
+</style>

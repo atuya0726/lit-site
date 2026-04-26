@@ -1,23 +1,387 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const {
+	title,
+	description = '栃木県で活動するソフトテニスクラブチーム Lit. の公式Webサイトです。'
+} = Astro.props;
+
+const navItems = [
+	{ href: '/', label: 'Home', jp: 'ホーム' },
+	{ href: '/practice', label: 'Practice', jp: '練習' },
+	{ href: '/results', label: 'Results', jp: '試合結果' },
+	{ href: '/contact', label: 'Contact', jp: '問い合わせ' }
+];
+
+const rawPath = Astro.url.pathname;
+const currentPath =
+	rawPath !== '/' && rawPath.endsWith('/') ? rawPath.slice(0, -1) : rawPath;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title} | Lit.</title>
+		<meta name="description" content={description} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;800&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
-		<slot />
+		<div class="bg-orbs" aria-hidden="true">
+			<span class="orb orb-1"></span>
+			<span class="orb orb-2"></span>
+			<span class="orb orb-3"></span>
+		</div>
+		<div class="bg-grid" aria-hidden="true"></div>
+
+		<header class="site-header">
+			<a class="brand" href="/">
+				<span class="brand-mark">Lit.</span>
+				<span class="brand-sub">Tochigi Soft Tennis Club</span>
+			</a>
+			<nav class="nav-pill" aria-label="メインナビゲーション">
+				<ul>
+					{
+						navItems.map((item) => (
+							<li>
+								<a
+									href={item.href}
+									class={currentPath === item.href ? 'active' : ''}
+									aria-current={currentPath === item.href ? 'page' : undefined}
+								>
+									<span class="nav-en">{item.label}</span>
+									<span class="nav-jp">{item.jp}</span>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-inner">
+				<div class="footer-left">
+					<p class="footer-brand">Lit.</p>
+					<p class="footer-tag">Soft Tennis Club, based in Tochigi.</p>
+				</div>
+				<nav class="footer-nav" aria-label="フッターナビゲーション">
+					{
+						navItems.map((item) => (
+							<a href={item.href}>{item.jp}</a>
+						))
+					}
+				</nav>
+				<p class="footer-copy">© {new Date().getFullYear()} Lit.</p>
+			</div>
+		</footer>
 	</body>
 </html>
 
-<style>
+<style is:global>
+	:root {
+		--primary: #623079;
+		--primary-deep: #2a1235;
+		--primary-soft: rgba(98, 48, 121, 0.12);
+		--secondary: #f8f9fa;
+		--ink: #1c1024;
+		--ink-soft: rgba(28, 16, 36, 0.62);
+		--line: rgba(28, 16, 36, 0.12);
+		--glass: rgba(255, 255, 255, 0.55);
+		--glass-strong: rgba(255, 255, 255, 0.75);
+		--shadow-lg: 0 30px 80px -20px rgba(98, 48, 121, 0.35);
+		--shadow-md: 0 18px 40px -18px rgba(98, 48, 121, 0.28);
+		--font-jp: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+		--font-en: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+		--font-display: 'Inter', 'Noto Sans JP', sans-serif;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
 	html,
 	body {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		padding: 0;
+		font-family: var(--font-jp);
+		color: var(--ink);
+		background: var(--secondary);
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+		overflow-x: hidden;
+	}
+
+	a {
+		color: inherit;
+	}
+
+	::selection {
+		background: var(--primary);
+		color: var(--secondary);
+	}
+</style>
+
+<style>
+	.bg-orbs {
+		position: fixed;
+		inset: 0;
+		z-index: -2;
+		pointer-events: none;
+		overflow: hidden;
+	}
+
+	.orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(110px);
+		opacity: 0.55;
+		animation: drift 22s ease-in-out infinite alternate;
+	}
+
+	.orb-1 {
+		width: 520px;
+		height: 520px;
+		top: -160px;
+		left: -120px;
+		background: radial-gradient(circle, #623079 0%, transparent 70%);
+	}
+
+	.orb-2 {
+		width: 460px;
+		height: 460px;
+		top: 30vh;
+		right: -160px;
+		background: radial-gradient(circle, #8a4eaa 0%, transparent 70%);
+		animation-delay: -8s;
+	}
+
+	.orb-3 {
+		width: 380px;
+		height: 380px;
+		bottom: -120px;
+		left: 30vw;
+		background: radial-gradient(circle, #c9a5dd 0%, transparent 70%);
+		animation-delay: -14s;
+		opacity: 0.4;
+	}
+
+	@keyframes drift {
+		0% {
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+		100% {
+			transform: translate3d(40px, 60px, 0) scale(1.1);
+		}
+	}
+
+	.bg-grid {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		background-image:
+			linear-gradient(rgba(98, 48, 121, 0.06) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(98, 48, 121, 0.06) 1px, transparent 1px);
+		background-size: 64px 64px;
+		mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 75%);
+		-webkit-mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 75%);
+		pointer-events: none;
+	}
+
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1.1rem clamp(1rem, 4vw, 2.5rem);
+		backdrop-filter: blur(18px) saturate(140%);
+		-webkit-backdrop-filter: blur(18px) saturate(140%);
+		background: rgba(248, 249, 250, 0.6);
+		border-bottom: 1px solid rgba(98, 48, 121, 0.1);
+	}
+
+	.brand {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: var(--primary);
+		line-height: 1;
+	}
+
+	.brand-mark {
+		font-family: var(--font-display);
+		font-weight: 800;
+		font-size: 1.65rem;
+		letter-spacing: -0.02em;
+	}
+
+	.brand-sub {
+		margin-top: 0.25rem;
+		font-family: var(--font-en);
+		font-size: 0.66rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--ink-soft);
+	}
+
+	.nav-pill ul {
+		list-style: none;
+		margin: 0;
+		padding: 0.35rem;
+		display: flex;
+		gap: 0.15rem;
+		background: var(--glass);
+		border: 1px solid rgba(255, 255, 255, 0.6);
+		backdrop-filter: blur(14px);
+		-webkit-backdrop-filter: blur(14px);
+		border-radius: 999px;
+		box-shadow: var(--shadow-md);
+	}
+
+	.nav-pill a {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-width: 78px;
+		padding: 0.5rem 0.95rem;
+		border-radius: 999px;
+		text-decoration: none;
+		color: var(--ink);
+		transition: all 220ms ease;
+	}
+
+	.nav-en {
+		font-family: var(--font-en);
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+	}
+
+	.nav-jp {
+		font-size: 0.62rem;
+		color: var(--ink-soft);
+		margin-top: 2px;
+		letter-spacing: 0.05em;
+	}
+
+	.nav-pill a:hover {
+		background: rgba(98, 48, 121, 0.08);
+	}
+
+	.nav-pill a.active {
+		background: var(--primary);
+		color: var(--secondary);
+	}
+
+	.nav-pill a.active .nav-jp {
+		color: rgba(248, 249, 250, 0.78);
+	}
+
+	main {
+		min-height: calc(100vh - 220px);
+	}
+
+	.site-footer {
+		margin-top: 6rem;
+		padding: 2.5rem clamp(1rem, 4vw, 2.5rem) 2rem;
+		background: linear-gradient(180deg, transparent, rgba(98, 48, 121, 0.06));
+		border-top: 1px solid rgba(98, 48, 121, 0.12);
+	}
+
+	.footer-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: center;
+		gap: 1rem 2rem;
+	}
+
+	.footer-left {
+		text-align: left;
+	}
+
+	.footer-brand {
+		margin: 0;
+		font-family: var(--font-display);
+		font-weight: 800;
+		font-size: 1.3rem;
+		color: var(--primary);
+		letter-spacing: -0.02em;
+	}
+
+	.footer-tag {
+		margin: 0.2rem 0 0;
+		font-size: 0.78rem;
+		color: var(--ink-soft);
+		font-family: var(--font-en);
+		letter-spacing: 0.06em;
+	}
+
+	.footer-nav {
+		display: flex;
+		gap: 1.2rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.footer-nav a {
+		text-decoration: none;
+		font-size: 0.85rem;
+		color: var(--ink);
+		transition: color 200ms;
+	}
+
+	.footer-nav a:hover {
+		color: var(--primary);
+	}
+
+	.footer-copy {
+		margin: 0;
+		text-align: right;
+		font-size: 0.78rem;
+		color: var(--ink-soft);
+		font-family: var(--font-en);
+	}
+
+	@media (max-width: 880px) {
+		.brand-sub {
+			display: none;
+		}
+		.nav-pill a {
+			min-width: 0;
+			padding: 0.45rem 0.7rem;
+		}
+		.nav-jp {
+			display: none;
+		}
+		.footer-inner {
+			grid-template-columns: 1fr;
+			text-align: center;
+		}
+		.footer-left,
+		.footer-copy {
+			text-align: center;
+		}
 	}
 </style>
