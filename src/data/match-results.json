@@ -1,5 +1,22 @@
 [
 	{
+		"id": "2025-tochigi-singles",
+		"date": "2025-12-21",
+		"tournament": "栃木県シングルス選手権大会",
+		"entries": [
+			{
+				"label": "加藤",
+				"category": "シングルス",
+				"result": "優勝"
+			},
+			{
+				"label": "鬼塚",
+				"category": "シングルス",
+				"result": "3位"
+			}
+		]
+	},
+	{
 		"id": "2025-autumn-tochigi",
 		"date": "2025-11-16",
 		"tournament": "栃木県クラブ対抗秋季大会",
@@ -22,6 +39,24 @@
 		]
 	},
 	{
+		"id": "2025-emperor-cup",
+		"date": "2025-11-06",
+		"endDate": "2025-11-08",
+		"tournament": "天皇賜杯・皇后賜杯全日本ソフトテニス選手権大会",
+		"entries": [
+			{
+				"label": "沼尾・岡田",
+				"category": "ダブルス",
+				"result": "出場"
+			},
+			{
+				"label": "加藤・大橋",
+				"category": "ダブルス",
+				"result": "出場"
+			}
+		]
+	},
+	{
 		"id": "2025-all-japan-club",
 		"date": "2025-10-25",
 		"endDate": "2025-10-26",
@@ -36,6 +71,31 @@
 				"label": "Bチーム",
 				"category": "団体",
 				"result": "1回戦敗退"
+			}
+		]
+	},
+	{
+		"id": "2025-tochigi-championship",
+		"date": "2025-09-28",
+		"tournament": "栃木県総合選手権大会",
+		"entries": [
+			{
+				"label": "加藤・三本木",
+				"category": "ダブルス",
+				"result": "優勝"
+			}
+		]
+	},
+	{
+		"id": "2025-kokusupo-kanto",
+		"date": "2025-08-22",
+		"endDate": "2025-08-24",
+		"tournament": "国民スポーツ大会 関東ブロック大会",
+		"entries": [
+			{
+				"label": "沼尾・大橋・福田",
+				"category": "団体",
+				"result": "出場"
 			}
 		]
 	},
@@ -58,6 +118,18 @@
 				"label": "Cチーム",
 				"category": "団体",
 				"result": "4部準優勝"
+			}
+		]
+	},
+	{
+		"id": "2025-shakaijin-tochigi",
+		"date": "2025-06-01",
+		"tournament": "ルーセント杯兼全日本社会人県予選会",
+		"entries": [
+			{
+				"label": "福田・三本木",
+				"category": "ダブルス",
+				"result": "優勝"
 			}
 		]
 	},
