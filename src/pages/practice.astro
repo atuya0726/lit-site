@@ -2,8 +2,22 @@
 import Layout from '../layouts/Layout.astro';
 
 const schedule = [
-	{ day: 'WD', jp: '平日', time: '19:00 – 21:00', place: '栃木県総合運動公園' },
-	{ day: 'Sat', jp: '土曜', time: '09:00 – 12:00', place: '日光運動公園' }
+	{
+		day: 'Sat',
+		jp: '土曜',
+		time: '10:00 – 18:00(の間で好きな時間に)',
+		place: 'ひろしコート（日光運動公園ほか）',
+		freq: '通常開催',
+		note: '基本はひろしコートで開催'
+	},
+	{
+		day: 'WD',
+		jp: '平日',
+		time: '19:00 – 21:00',
+		place: '栃木県総合運動公園 ほか',
+		freq: '不定期',
+		note: 'メンバーの都合に合わせて随時開催'
+	}
 ];
 
 const items = ['ラケット', 'テニスシューズ', '飲み物', 'タオル', '替えのシャツ'];
@@ -33,20 +47,34 @@ const items = ['ラケット', 'テニスシューズ', '飲み物', 'タオル'
 								<span class="day-jp">{s.jp}</span>
 							</div>
 							<div class="schedule-meta">
-								<p class="time">{s.time}</p>
+								<div class="schedule-head">
+									<p class="time">{s.time}</p>
+									<span class={`freq ${s.freq === '不定期' ? 'freq-irregular' : 'freq-regular'}`}>
+										{s.freq}
+									</span>
+								</div>
 								<p class="place">{s.place}</p>
+								{s.note && <p class="schedule-note">{s.note}</p>}
 							</div>
 						</li>
 					))
 				}
 			</ul>
+			<p class="schedule-foot">
+				※ 土曜の練習を中心に、平日は参加可能なメンバーが集まったタイミングで開催しています。
+			</p>
 		</article>
 
 		<article class="card dark">
 			<p class="card-tag light">Location</p>
 			<h2>活動エリア</h2>
+			<div class="home-court">
+				<span class="home-badge">Home Court</span>
+				<p class="home-name">ひろしコート</p>
+				<p class="home-note">※ メンバー所有のテニスコートです</p>
+			</div>
 			<p>
-				栃木県日光市と近郊の屋外/屋内コートを中心に活動しています。<br />
+				ひろしコートを拠点に、栃木県日光市と近郊の屋外／屋内コートで活動しています。<br />
 				（例）日光運動公園、栃木県総合運動公園、鬼怒グリーンパーク
 			</p>
 
@@ -228,6 +256,13 @@ const items = ['ラケット', 'テニスシューズ', '飲み物', 'タオル'
 		opacity: 0.8;
 	}
 
+	.schedule-head {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
 	.time {
 		margin: 0;
 		font-family: var(--font-en);
@@ -236,9 +271,83 @@ const items = ['ラケット', 'テニスシューズ', '飲み物', 'タオル'
 		color: var(--ink) !important;
 	}
 
+	.freq {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.18rem 0.6rem;
+		border-radius: 999px;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		line-height: 1;
+	}
+
+	.freq-regular {
+		background: rgba(98, 48, 121, 0.12);
+		color: var(--primary);
+		border: 1px solid rgba(98, 48, 121, 0.22);
+	}
+
+	.freq-irregular {
+		background: rgba(120, 120, 120, 0.1);
+		color: var(--ink-soft);
+		border: 1px solid rgba(120, 120, 120, 0.22);
+	}
+
 	.place {
-		margin: 0.25rem 0 0;
+		margin: 0.35rem 0 0;
 		font-size: 0.88rem;
+	}
+
+	.schedule-note {
+		margin: 0.35rem 0 0 !important;
+		font-size: 0.78rem;
+		color: var(--ink-soft);
+	}
+
+	.schedule-foot {
+		margin: 0.9rem 0 0 !important;
+		font-size: 0.8rem;
+		color: var(--ink-soft) !important;
+		line-height: 1.7;
+	}
+
+	.home-court {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: baseline;
+		column-gap: 0.7rem;
+		row-gap: 0.3rem;
+		margin: 0 0 0.9rem;
+		padding: 0.7rem 0.9rem;
+		border-radius: 14px;
+		background: rgba(255, 255, 255, 0.12);
+		border: 1px solid rgba(255, 255, 255, 0.18);
+	}
+
+	.home-badge {
+		font-family: var(--font-en);
+		font-size: 0.65rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: rgba(248, 249, 250, 0.7);
+	}
+
+	.home-name {
+		margin: 0 !important;
+		font-family: var(--font-display);
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--secondary) !important;
+		letter-spacing: 0.02em;
+	}
+
+	.home-note {
+		grid-column: 1 / -1;
+		margin: 0 !important;
+		font-size: 0.75rem;
+		line-height: 1.6;
+		color: rgba(248, 249, 250, 0.75) !important;
 	}
 
 	.bullets {
