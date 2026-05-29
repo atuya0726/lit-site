@@ -1,6 +1,6 @@
 ---
 interface Props {
-	title: string;
+	title?: string;
 	description?: string;
 }
 
@@ -8,6 +8,10 @@ const {
 	title,
 	description = '栃木県で活動するソフトテニスクラブチーム Lit. の公式Webサイトです。'
 } = Astro.props;
+
+const siteUrl = 'https://lit-softtennis.club';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+const pageTitle = title ? `${title} | 栃木ソフトテニスクラブ Lit.` : '栃木ソフトテニスクラブ Lit.';
 
 const navItems = [
 	{ href: '/', label: 'Home', jp: 'ホーム' },
@@ -28,8 +32,38 @@ const currentPath =
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title} | Lit.</title>
+		<title>{pageTitle}</title>
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="栃木ソフトテニスクラブ Lit." />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:locale" content="ja_JP" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={description} />
+
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "SportsClub",
+			"name": "Lit.",
+			"alternateName": "栃木ソフトテニスクラブ Lit.",
+			"description": "栃木県宇都宮市を拠点に活動するソフトテニスクラブ",
+			"url": siteUrl,
+			"address": {
+				"@type": "PostalAddress",
+				"addressRegion": "栃木県",
+				"addressLocality": "宇都宮市",
+				"addressCountry": "JP"
+			},
+			"sport": "ソフトテニス",
+			"areaServed": { "@type": "AdministrativeArea", "name": "栃木県" }
+		})} />
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
