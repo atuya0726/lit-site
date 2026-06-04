@@ -22,9 +22,40 @@ const latest = (matchResults as MatchResult[]).sort(
 const latestCategories = latest
 	? Array.from(new Set(latest.entries.map((e) => e.category)))
 	: [];
+
+const faqItems = [
+	{
+		q: 'Lit.はどんなソフトテニスクラブですか？',
+		a: '栃木県宇都宮市を拠点に活動する社会人ソフトテニスクラブです。ガチ勢からエンジョイ勢まで、学生時代の経験を活かして楽しめる環境を大切にしています。'
+	},
+	{
+		q: '栃木県のどこで練習していますか？',
+		a: '主に宇都宮市内のコートで練習しています。コートが確保できない場合は、栃木県総合運動公園・日光運動公園・鬼怒グリーンパークなど栃木県内各地で開催します。'
+	},
+	{
+		q: '体験参加はできますか？',
+		a: 'はい、歓迎しています。まずお問い合わせフォームからご連絡ください。次の練習日程をご案内します。'
+	},
+	{
+		q: '未経験者でも参加できますか？',
+		a: '現在は学生時代にソフトテニスを経験された方を対象としています。ブランクがある方も大歓迎です。完全未経験の方の受け入れは現在行っていません。'
+	}
+];
 ---
 
-<Layout description="栃木県宇都宮市を拠点に活動するソフトテニスクラブ Lit. の公式サイトです。土曜・平日に定期練習を開催。学生時代の経験者・ブランク明けの方歓迎。">
+<Layout description="栃木県宇都宮市のソフトテニスクラブ Lit.（リット）の公式サイト。栃木 ソフトテニスの社会人サークルを探している方へ。土曜を中心に宇都宮市内で定期練習。学生時代の経験者・ブランク歓迎。">
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": faqItems.map(item => ({
+			"@type": "Question",
+			"name": item.q,
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": item.a
+			}
+		}))
+	})} />
 	<section class="hero">
 		<div class="hero-inner">
 
@@ -135,6 +166,37 @@ const latestCategories = latest
 			<p>体験参加 / 練習試合のご依頼など。</p>
 			<span class="cell-cta">View →</span>
 		</a>
+	</section>
+
+	<section class="about">
+		<div class="about-inner">
+			<h2>栃木県の社会人ソフトテニスクラブ</h2>
+			<p>
+				Lit.（リット）は、栃木県宇都宮市を拠点に活動する社会人ソフトテニスクラブです。
+				学生時代にソフトテニスを経験した方が、ふたたびコートに立てる場を目指して集まりました。
+			</p>
+			<p>
+				週1〜2回の定期練習では、宇都宮市内のコートをメインに栃木県内各地で活動しています。
+				栃木県の大会にも積極的に参加し、競技としてのソフトテニスも楽しんでいます。
+			</p>
+		</div>
+	</section>
+
+	<section class="faq">
+		<div class="faq-inner">
+			<h2 class="faq-title">よくある質問</h2>
+			<dl class="faq-list">
+				{faqItems.map(item => (
+					<div class="faq-item">
+						<dt>{item.q}</dt>
+						<dd set:html={item.a.replace(
+							'お問い合わせフォーム',
+							'<a href="/contact">お問い合わせフォーム</a>'
+						)} />
+					</div>
+				))}
+			</dl>
+		</div>
 	</section>
 </Layout>
 
@@ -537,5 +599,93 @@ const latestCategories = latest
 		.bento {
 			grid-template-columns: 1fr;
 		}
+	}
+
+	.about {
+		max-width: 1200px;
+		margin: 4rem auto 0;
+		padding: 0 clamp(1rem, 4vw, 2.5rem);
+	}
+
+	.about-inner {
+		padding: clamp(1.8rem, 3vw, 2.6rem);
+		border-radius: 24px;
+		background: var(--glass-strong);
+		border: 1px solid rgba(255, 255, 255, 0.7);
+		backdrop-filter: blur(18px);
+		-webkit-backdrop-filter: blur(18px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.about-inner h2 {
+		margin: 0 0 1rem;
+		font-family: var(--font-display);
+		font-size: clamp(1.4rem, 2vw + 0.8rem, 1.9rem);
+		font-weight: 700;
+		color: var(--primary);
+		letter-spacing: -0.02em;
+	}
+
+	.about-inner p {
+		margin: 0 0 0.8rem;
+		line-height: 1.95;
+		color: var(--ink-soft);
+		max-width: 52rem;
+	}
+
+	.about-inner p:last-child {
+		margin-bottom: 0;
+	}
+
+	.faq {
+		max-width: 1200px;
+		margin: 3rem auto 2rem;
+		padding: 0 clamp(1rem, 4vw, 2.5rem);
+	}
+
+	.faq-title {
+		margin: 0 0 1.4rem;
+		font-family: var(--font-display);
+		font-size: clamp(1.3rem, 2vw + 0.6rem, 1.7rem);
+		font-weight: 700;
+		color: var(--primary);
+		letter-spacing: -0.02em;
+	}
+
+	.faq-list {
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.faq-item {
+		padding: 1.2rem 1.5rem;
+		border-radius: 16px;
+		background: var(--glass-strong);
+		border: 1px solid rgba(255, 255, 255, 0.7);
+		backdrop-filter: blur(14px);
+		-webkit-backdrop-filter: blur(14px);
+		box-shadow: 0 6px 20px -8px rgba(98, 48, 121, 0.15);
+	}
+
+	.faq-item dt {
+		font-family: var(--font-display);
+		font-weight: 700;
+		font-size: 0.95rem;
+		color: var(--ink);
+		margin-bottom: 0.5rem;
+	}
+
+	.faq-item dd {
+		margin: 0;
+		line-height: 1.9;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+	}
+
+	.faq-item dd :global(a) {
+		color: var(--primary);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 </style>
